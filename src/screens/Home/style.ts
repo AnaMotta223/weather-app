@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         height: '100%',
       },
       scrollContent: {
-        flexGrow: 1, // Garante que o conteúdo pode crescer para permitir a rolagem
+        flexGrow: 1, 
         justifyContent: 'center',
         alignItems: 'center',
       },
@@ -16,7 +16,22 @@ export const styles = StyleSheet.create({
         backgroundColor: '#ffffff70',
         borderRadius: 15,
         padding: 20,
-        marginVertical: 20, // Dá espaço acima e abaixo para o container
-        // elevation: 5,
+        marginVertical: 20, 
       },
+      content: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "25%"
+      },
+      searchText: {
+        fontFamily: "Niramit_700Bold",
+        fontSize: 32,
+        color: "#fff",
+      },
+      description: {
+        fontFamily: "Niramit_600SemiBold",
+        fontSize: 23,
+        color: "#fff"
+      }
 });

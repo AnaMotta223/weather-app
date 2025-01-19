@@ -8,12 +8,19 @@ export const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 125,
     paddingLeft: 25,
     borderRadius: 25,
-    alignSelf: "center"
+    alignSelf: "center",
    }, 
   search: {
-    fontSize: 18,
-  }
+    fontSize: 20,
+    color: "#fff",
+    fontFamily: "Niramit_500Medium",
+    marginTop: 7,
+    marginRight: 60
+  },
+  elevation: {
+    elevation: 15,
+    shadowColor: '#000',
+  },
 });

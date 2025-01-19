@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 8,
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignSelf: "center",
         width: 285
     },

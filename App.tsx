@@ -3,7 +3,6 @@ import { View, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Routes } from './src/routes';
 import * as Font from 'expo-font';
-import 'dotenv/config';
 import { Niramit_400Regular, Niramit_500Medium, Niramit_600SemiBold, Niramit_700Bold } from '@expo-google-fonts/niramit';
 
 export default function App() {

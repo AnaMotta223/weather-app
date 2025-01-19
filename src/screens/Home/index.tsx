@@ -19,7 +19,7 @@ import { GetCities } from '../../services/ServiceGetCities';
   const { width, height } = Dimensions.get('window');
   
   interface ResponseApi {
-    id: number;
+    geonameId: number;
     name: string;
   }
 
@@ -32,7 +32,7 @@ import { GetCities } from '../../services/ServiceGetCities';
       const response = await GetCities();
       
       if (response && response.status === 200) {
-        setCities(response.data)
+        setCities(response.data.geonames)
       } else {
         console.log("Error")
       }
@@ -48,10 +48,22 @@ import { GetCities } from '../../services/ServiceGetCities';
       setSearch(value);
     }
 
-    const filteredCities = cities.filter((c) =>
-      c.name.toLowerCase().includes(search.toLowerCase())
-    );
+    const filteredCities = cities
+    .filter((c) => c.name.toLowerCase().includes(search.toLowerCase())) 
+    .sort((a, b) => {
+      const aIndex = a.name.toLowerCase().indexOf(search.toLowerCase());
+      const bIndex = b.name.toLowerCase().indexOf(search.toLowerCase());
+  
+      if (aIndex === bIndex) {
+        return a.name.localeCompare(b.name); 
+      }
+      return aIndex - bIndex; 
+    });
 
+    const maxItems = 17; 
+    const limitedCities = filteredCities.slice(0, maxItems); 
+  
+  
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ImageBackground
@@ -64,21 +76,33 @@ import { GetCities } from '../../services/ServiceGetCities';
             contentContainerStyle={styles.scrollContent}
           >
             <View style={[styles.container, { width: width * 0.9, height: height * 0.95 }]}>
-              <SearchBar value={search} onChange={() => handleSearch} />
-              {/* <View style={styles.content}>
-              <Image source={ImageCity} alt='Ilustração de prédios e casas de uma cidade'/>
-              <Text style={styles.searchText}>Pesquise uma cidade</Text>
-              <Text style={styles.description}>Descubra suas condições climáticas</Text>
-              </View> */}
-              <FlatList
-               style={{ display: "flex", marginTop: "3%", gap: 20 }}
-               data={filteredCities}
-               keyExtractor={(item) => item.id.toString()}
+              <SearchBar value={search} onChange={handleSearch} />
+              {
+                !search ? (
+                  <View style={styles.content}>
+                  <Image source={ImageCity} alt='Ilustração de prédios e casas de uma cidade'/>
+                  <Text style={styles.searchText}>Pesquise uma cidade</Text>
+                  <Text style={styles.description}>Descubra suas condições climáticas</Text>
+                  </View> 
+                ) : (
+                  <>
+                <FlatList
+               style={{ display: "flex", marginTop: "6%", gap: 20 }}
+               data={limitedCities}
+               keyExtractor={(item) => item.geonameId.toString()}
+               initialNumToRender={10}
+               
+               maxToRenderPerBatch={5}
+               scrollEnabled={false}
                renderItem={({ item }) => 
                 <PlaceName cityName={item.name} />
                }
                showsVerticalScrollIndicator={false}
+               ListFooterComponent={<View style={{ height: 20 }} />}
               />
+              </>
+                )
+              }
             </View>
           </ScrollView>
         </ImageBackground>

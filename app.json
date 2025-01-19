@@ -6,6 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "extra": {
+      "API_KEY": "b7d859619d58a8deb7620e98001489db"
+    },
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",

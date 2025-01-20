@@ -8,16 +8,17 @@ import {
     Image,
     Text,
     FlatList,
+    ActivityIndicator,
   } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SearchBar } from '../../components/SearchBar';
 import { styles } from './style';
 import ImageCity from "../../assets/undraw_best-place_dhzp 1.png"
+import ImageNotFound from "../../assets/space.png"
 import { PlaceName } from '../../components/PlaceName';
 import { GetCities } from '../../services/ServiceGetCities';
   
   const { width, height } = Dimensions.get('window');
-  
   interface ResponseApi {
     geonameId: number;
     name: string;
@@ -26,23 +27,23 @@ import { GetCities } from '../../services/ServiceGetCities';
   export const Home = () => {
     const [ search, setSearch ] = useState<string>("");
     const [ cities, setCities ] = useState<ResponseApi[]>([]);
+    const [ isLoading, setIsLoading] = useState<boolean>(false);
 
     const loadApiCities = async () => {
-      // setIsloading(true);
+      setIsLoading(true);
       const response = await GetCities();
       
       if (response && response.status === 200) {
         setCities(response.data.geonames)
       } else {
-        console.log("Error")
+        console.error("Error setting cities")
       }
-        // setIsloading(false);
+      setIsLoading(false);
     }
   
     useEffect(() => {
       loadApiCities();
     }, [])
-
 
     const handleSearch = (value: string) => {
       setSearch(value);
@@ -63,7 +64,6 @@ import { GetCities } from '../../services/ServiceGetCities';
     const maxItems = 17; 
     const limitedCities = filteredCities.slice(0, maxItems); 
   
-  
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ImageBackground
@@ -78,6 +78,12 @@ import { GetCities } from '../../services/ServiceGetCities';
             <View style={[styles.container, { width: width * 0.9, height: height * 0.95 }]}>
               <SearchBar value={search} onChange={handleSearch} />
               {
+                isLoading ? (
+                  <View style={styles.loadingContainer}>
+                          <ActivityIndicator size="large" style={styles.loadingIndicator} color={"#fff"} />
+                          <Text style={styles.loadingText}>Carregando</Text>
+                        </View>
+                ) : (
                 !search ? (
                   <View style={styles.content}>
                   <Image source={ImageCity} alt='Ilustração de prédios e casas de uma cidade'/>
@@ -85,9 +91,15 @@ import { GetCities } from '../../services/ServiceGetCities';
                   <Text style={styles.description}>Descubra suas condições climáticas</Text>
                   </View> 
                 ) : (
-                  <>
+                filteredCities.length === 0 ? (
+                  <View style={styles.noResultsContainer}>
+                    <Text style={styles.notFound}>404</Text>
+                    <Image source={ImageNotFound} style={styles.notFoundImage} alt='Ilustração de espaço representando conteúdo não encontrado' />
+                    <Text style={styles.noResultsText}>Ops, não foi possível encontrar essa cidade</Text>
+                  </View>
+                ) : (
                 <FlatList
-               style={{ display: "flex", marginTop: "6%", gap: 20 }}
+               style={styles.citiesList}
                data={limitedCities}
                keyExtractor={(item) => item.geonameId.toString()}
                initialNumToRender={10}
@@ -95,13 +107,14 @@ import { GetCities } from '../../services/ServiceGetCities';
                maxToRenderPerBatch={5}
                scrollEnabled={false}
                renderItem={({ item }) => 
-                <PlaceName cityName={item.name} />
+                <PlaceName cityName={item.name} btnJustify={"flex-start"} />
                }
                showsVerticalScrollIndicator={false}
                ListFooterComponent={<View style={{ height: 20 }} />}
               />
-              </>
                 )
+                )
+              )
               }
             </View>
           </ScrollView>

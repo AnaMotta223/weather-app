@@ -6,13 +6,14 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 8,
         alignItems: "center",
-        justifyContent: "flex-start",
+   
         alignSelf: "center",
         width: 285
     },
     city: {
         color: "#fff",
         fontFamily: "Niramit_600SemiBold",
-        fontSize: 21
+        fontSize: 21,
+        flexShrink: 1
     }
 });

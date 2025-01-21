@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
       },
       container: {
         marginTop: "10%",
-        backgroundColor: '#ffffff70',
+        backgroundColor: '#ffffff60',
         borderRadius: 15,
         padding: 20,
         marginVertical: 20, 
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
       mainContent: {
         display: "flex",
         alignItems: "center",
-        marginTop: "8%",
+        marginTop: "5%",
       },
       weather: {
         display: "flex",
@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
       },
       animation: {
         width: 300, 
-        height: 300
+        height: 300,
       },
       description: {
         marginTop: -65,
@@ -64,5 +64,52 @@ export const styles = StyleSheet.create({
         fontSize: 21,
         width: 100,
         marginTop: -10
+      },
+      conditions: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 35,
+        alignItems: "center",
+        marginTop: -35,
+        marginBottom: 5
+      },
+      conditionsDetails: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 8
+      },
+      conditionsTexts: {
+        marginTop: -10
+      },
+      conditionTitle: {
+        textAlign: "center", 
+        fontFamily: "Niramit_500Medium",
+        fontSize: 19,
+        color: "#fff"
+      },
+      conditionContent: {
+        textAlign: "center",
+        fontFamily: "Niramit_700Bold",
+        fontSize: 19,
+        color: "#fff",
+        marginTop: -10
+      },
+      boxWeather: {
+        display: "flex",
+        gap: 8,
+        backgroundColor: "#ffffff50",
+        borderRadius: 18,
+        marginRight: 14,
+        width: 98, 
+        height: 127,
+        marginTop: 19,
+        alignItems: "center",
+        paddingTop: 3
+      },
+      info: {
+        fontFamily: "Niramit_500Medium",
+        color: "#fff",
+        textAlign: "center",
+        fontSize: 18
       }
 });

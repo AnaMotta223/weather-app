@@ -4,7 +4,6 @@ import { StatusBar } from 'expo-status-bar';
 import { Routes } from './src/routes';
 import * as Font from 'expo-font';
 import { Niramit_400Regular, Niramit_500Medium, Niramit_600SemiBold, Niramit_700Bold } from '@expo-google-fonts/niramit';
-import { Weather } from './src/screens/Weather';
 
 export default function App() {
   const [fontsLoaded] = Font.useFonts({

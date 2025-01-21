@@ -11,12 +11,12 @@ export const styles = StyleSheet.create({
     paddingLeft: 25,
     borderRadius: 25,
     alignSelf: "center",
+    paddingTop: 4
    }, 
   search: {
     fontSize: 20,
     color: "#fff",
     fontFamily: "Niramit_500Medium",
-    marginTop: 7,
     marginRight: 60
   },
   elevation: {

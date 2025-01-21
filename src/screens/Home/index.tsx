@@ -16,7 +16,9 @@ import { styles } from './style';
 import ImageCity from "../../assets/undraw_best-place_dhzp 1.png"
 import ImageNotFound from "../../assets/space.png"
 import { PlaceName } from '../../components/PlaceName';
-import { GetCities } from '../../services/ServiceGetCities';
+import { GetCities } from '../../utils/services/ServiceGetCities';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
   
   const { width, height } = Dimensions.get('window');
   interface ResponseApi {
@@ -28,6 +30,7 @@ import { GetCities } from '../../services/ServiceGetCities';
     const [ search, setSearch ] = useState<string>("");
     const [ cities, setCities ] = useState<ResponseApi[]>([]);
     const [ isLoading, setIsLoading] = useState<boolean>(false);
+    const navigation = useNavigation();
 
     const loadApiCities = async () => {
       setIsLoading(true);
@@ -47,6 +50,11 @@ import { GetCities } from '../../services/ServiceGetCities';
 
     const handleSearch = (value: string) => {
       setSearch(value);
+    }
+
+    const handleClick = (value: string) => {
+      AsyncStorage.setItem("city", value);
+      navigation.navigate("Weather");
     }
 
     const filteredCities = cities
@@ -69,7 +77,7 @@ import { GetCities } from '../../services/ServiceGetCities';
         <ImageBackground
           source={require('../../assets/sky.png')}
           style={styles.background}
-          blurRadius={20}
+          blurRadius={40}
         >
           <ScrollView
             keyboardShouldPersistTaps="handled"
@@ -107,7 +115,7 @@ import { GetCities } from '../../services/ServiceGetCities';
                maxToRenderPerBatch={5}
                scrollEnabled={false}
                renderItem={({ item }) => 
-                <PlaceName cityName={item.name} btnJustify={"flex-start"} />
+                <PlaceName action={() => handleClick(item.name)} cityName={item.name} btnJustify={"flex-start"}  />
                }
                showsVerticalScrollIndicator={false}
                ListFooterComponent={<View style={{ height: 20 }} />}
